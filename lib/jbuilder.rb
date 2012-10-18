@@ -223,6 +223,20 @@ class Jbuilder < ActiveSupport::BasicObject
     end
   end
 
+  # Similar to #extract!, but you don't have to specify the attributes.
+  def hash!(hash)
+    return nil unless hash
+    hash.each do |key, value|
+      if value.is_a?(Hash)
+        set!(key, hash!(value))
+      elsif value.is_a?(Array)
+        array!(value)
+      else
+        set!(key, value.to_s)
+      end
+    end
+  end
+
   def call(object = nil, *attributes)
     if attributes.empty?
       array!(object, &::Proc.new)
