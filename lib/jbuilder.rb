@@ -227,9 +227,9 @@ class Jbuilder < ActiveSupport::BasicObject
   def hash!(hash)
     return nil unless hash
     hash.each do |key, value|
-      if value.is_a?(Hash)
+      if value.is_a?(::Hash)
         set!(key, hash!(value))
-      elsif value.is_a?(Array)
+      elsif value.is_a?(::Array)
         array!(value)
       else
         set!(key, value.to_s)
