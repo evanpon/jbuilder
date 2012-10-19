@@ -219,7 +219,10 @@ class Jbuilder < ActiveSupport::BasicObject
     if object.is_a?(::Hash)
       attributes.each {|attribute| _set_value attribute, object.send(:fetch, attribute)}
     else
-      attributes.each {|attribute| _set_value attribute, object.send(attribute)}
+      attributes.each do |attribute| 
+        val = object.nil? ? nil : object.send(attribute)
+        _set_value attribute, val
+      end
     end
   end
 
